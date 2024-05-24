@@ -8,6 +8,7 @@ import { Button } from "@nextui-org/react";
 import toast from "react-hot-toast";
 import { saveEmail } from "@/actions/save.email";
 import { GetEmailDetails } from "@/actions/get.email.details";
+import { sendEmail } from "@/shared/utils/email.sender";
 
 const Emaileditor = ({ subjectTitle }: { subjectTitle: string }) => {
   const [loading, setLoading] = useState(true);
@@ -22,14 +23,14 @@ const Emaileditor = ({ subjectTitle }: { subjectTitle: string }) => {
     unlayer?.exportHtml(async (data) => {
       const { design, html } = data;
       setJsonData(design);
-      //   await sendEmail({
-      //     userEmail: ["sponsorship@becodemy.com"],
-      //     subject: subjectTitle,
-      //     content: html,
-      //   }).then((res) => {
-      //     toast.success("Email sent successfully!");
-      //     history.push("/dashboard/write");
-      //   });
+        await sendEmail({
+          userEmail: ["sponsorship@becodemy.com"],
+          subject: subjectTitle,
+          content: html,
+        }).then((res) => {
+          toast.success("Email sent successfully!");
+          history.push("/dashboard/write");
+        });
     });
   };
 

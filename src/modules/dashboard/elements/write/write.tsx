@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteEmail } from "@/actions/delete.email";
 import { getEmails } from "@/actions/get.emails";
 import { ICONS } from "@/shared/utils/icons";
 import { useClerk } from "@clerk/nextjs";
@@ -40,9 +41,9 @@ const Write = () => {
   };
 
   const deleteHanlder = async (id: string) => {
-    // await deleteEmail({ emailId: id }).then((res) => {
-    //   FindEmails();
-    // });
+    await deleteEmail({ emailId: id }).then((res) => {
+      FindEmails();
+    });
   };
 
   return (
