@@ -1,8 +1,22 @@
+import { stripeSubscribe } from "@/actions/stripe.subscribe";
 import { freePlan, GrowPlan, scalePlan } from "@/app/configs/constants";
 import { ICONS } from "@/shared/utils/icons";
+import { useUser } from "@clerk/nextjs";
 import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const PricingCard = ({ active }: { active: string }) => {
+  const { user } = useUser();
+  const history = useRouter();
+
+  const handleSubscription = async ({ price }: { price: string }) => {
+    await stripeSubscribe({ price: price, userId: user?.id! }).then(
+      (res: any) => {
+        history.push(res);
+      }
+    );
+  };
+
   return (
     <div className="w-full md:flex items-start justify-around py-8">
       {/* Free plan */}
@@ -85,12 +99,23 @@ const PricingCard = ({ active }: { active: string }) => {
           </div>
         ))}
         <br />
-        <Button color="primary" className="w-full text-xl !py-6">
+        <Button
+          color="primary"
+          className="w-full text-xl !py-6"
+          onClick={() =>
+            handleSubscription({
+              price:
+                active === "Monthly"
+                  ? "price_1PKpGeL40cu79ifk75W1tdC4"
+                  : "price_1PL4irL40cu79ifkPs4l4Ovh",
+            })
+          }
+        >
           Get Started
         </Button>
         <p className="pt-1 opacity-[.7] text-center">
           30-day free trial of Scale features, then $
-          {active === "Monthly" ? "42" : "49"}/mo
+          {active === "Monthly" ? "49" : "42"}/mo
         </p>
       </div>
 
@@ -130,7 +155,18 @@ const PricingCard = ({ active }: { active: string }) => {
           </div>
         ))}
         <br />
-        <Button color="primary" className="w-full text-xl !py-6">
+        <Button
+          color="primary"
+          className="w-full text-xl !py-6"
+          onClick={() =>
+            handleSubscription({
+              price:
+                active === "Monthly"
+                  ? "price_1PKpOiL40cu79ifkR6OVg25m"
+                  : "price_1PL4k8L40cu79ifkP95BKdBd",
+            })
+          }
+        >
           Get Started
         </Button>
         <p className="pt-1 opacity-[.7] text-center">
