@@ -42,11 +42,11 @@ const UserPlan = () => {
       />
       <h6 className="text-[#831743]">
         {loading ? "..." : data?.length} of{" "}
-        {membershipData?.plan === "LAUNCH"
+        {membershipData?.plan === "LAUNCH" || "GROW"
           ? "2500"
           : membershipData?.plan === "SCALE"
           ? "10,000"
-          : "1,00,000"}{" "}
+          : "1,000,000"}{" "}
         added
       </h6>
     </div>
